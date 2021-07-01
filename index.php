@@ -1,129 +1,112 @@
   
-<?php 
-
-
-class Film {
-
-  public $title;
-  public $director;
-  public $year;
-  public $budget;
-  public $language;
-
-  function __construct(string $title, string $director, int $year, int $budget, string $language){
-    $this->title = $title;
-    $this->director = $director;
-    $this->year = $year;
-    $this->budget = $budget;
-    $this->language = $language;
-  }
- 
-
-  /**
-   * Get the value of title
-   */ 
-  public function getTitle()
-  {
-    return $this->title;
-  }
-
-  /**
-   * Set the value of title
-   *
-   * @return  self
-   */ 
-  public function setTitle($title)
-  {
-    $this->title = $title;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of director
-   */ 
-  public function getDirector()
-  {
-    return $this->director;
-  }
-
-  /**
-   * Set the value of director
-   *
-   * @return  self
-   */ 
-  public function setDirector($director)
-  {
-    $this->director = $director;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of year
-   */ 
-  public function getYear()
-  {
-    return $this->year;
-  }
-
-  /**
-   * Set the value of year
-   *
-   * @return  self
-   */ 
-  public function setYear($year)
-  {
-    $this->year = $year;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of budget
-   */ 
-  public function getBudget()
-  {
-    return $this->budget;
-  }
-
-  /**
-   * Set the value of budget
-   *
-   * @return  self
-   */ 
-  public function setBudget($budget)
-  {
-    $this->budget = $budget;
-
-    return $this;
-  }
-
-  /**
-   * Get the value of language
-   */ 
-  public function getLanguage()
-  {
-    return $this->language;
-  }
-
-  /**
-   * Set the value of language
-   *
-   * @return  self
-   */ 
-  public function setLanguage($language)
-  {
-    $this->language = $language;
-
-    return $this;
-  }
-};
-
-  $avengersEndgame = new Film("Avengers: Endgame", "Joe Russo", 2019, 300, "eng");
-  $smettoQuandoVoglio = new Film("Smetto Quando Voglio", "Sydney Sibilia", 2014, 200, "ita");
-  $batman = new Film("Batman", "Tim Burton", 1989, 100, "eng");
-
-  var_dump($avengersEndgame, $smettoQuandoVoglio, $batman);
-
+<?php
+require_once __DIR__ . '/database/classes.php';
+require_once __DIR__ . '/database/objects.php';
+require_once __DIR__ . '/app/server.php';
 ?>
+
+<!DOCTYPE html>
+<html lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PHP - OGGETTI [Comics Shop]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+
+    <header>
+      <h1 class="title">
+        <?php echo $comicsShop->name ?>
+      </h1>
+    </header>
+
+    <main>
+      <div class="catalogue">
+        <!-- Sezione fumetti -->
+        <section class="catalogue-element">
+          <h2>FUMETTI</h2>
+          <ul>
+            <?php
+            foreach ($comicsShop->getComics() as $comic) {
+              ?>
+              <li>
+                <b>Titolo</b> : <?php echo $comic->title ?><br />
+                <b>Serie</b> : <?php echo $comic->series ?><br />
+                <b>Editore</b> : <?php echo $comic->editor ?><br />
+                <b>Data pubblicazione</b> : <?php echo $comic->date ?><br />
+                <b>Paese</b> : <?php echo $comic->country ?><br />
+                <b>Testi</b> : <?php echo $comic->writers ?><br />
+                <b>Disegni</b> <?php echo $comic->artists ?><br />
+                <b>Lingua</b> : <?php echo $comic->language ?><br />
+                <b>Pagine</b> : <?php echo $comic->pages ?><br />
+                <b>Formato</b> : <?php echo $comic->format ?><br />
+                <b>Colori</b> :
+                <?php
+                if ($comic->colors) {
+                  echo 'A colori';
+                } else {
+                  echo 'Bianco/Nero';
+                }
+                ?>
+                <br />
+
+              </li>
+              <?php
+            }
+            ?>
+          </ul>
+        </section>
+        <!-- / Sezione fumetti -->
+
+      <!-- Sezione Blurays -->
+      <section class="catalogue-element">
+        <h2>BLU-RAYS</h2>
+        <ul>
+          <?php
+          foreach ($comicsShop->getBlurays() as $bluray) {
+            ?>
+            <li>
+              <b>Titolo</b> : <?php echo $bluray->title ?><br />
+              <b>Tipo</b> : <?php echo $bluray->type ?><br />
+              <b>Anno</b> : <?php echo $bluray->year ?><br />
+              <b>Paese</b> : <?php echo $bluray->country ?><br />
+              <b>Genere</b> : <?php echo $bluray->genre ?><br />
+              <b>Studio</b> : <?php echo $bluray->studio ?><br />
+              <b>Regista</b> : <?php echo $bluray->director ?><br />
+              <b>Cast</b> <?php echo $bluray->cast ?><br />
+            </li>
+            <?php
+          }
+          ?>
+        </ul>
+      </section>
+      <!-- / Sezione Blurays -->
+
+      <!-- Sezione Action Figures -->
+      <section class="catalogue-element">
+        <h2>ACTION FIGURES & GAMES</h2>
+        <ul>
+          <?php
+          foreach ($comicsShop->getAFigures() as $afigure) {
+            ?>
+            <li>
+              <b>Nome</b> : <?php echo $afigure->modelname ?><br />
+              <b>Produttore</b> : <?php echo $afigure->productor ?><br />
+              <b>Tipo</b> : <?php echo $afigure->type ?><br />
+              <b>Materiale</b> : <?php echo $afigure->material ?><br />
+              <b>Anno</b> : <?php echo $afigure->year ?><br />
+            </li>
+            <?php
+          }
+          ?>
+        </ul>
+      </section>
+      <!-- / Sezione Action Figures -->
+    </main>
+
+
+  </body>
+</html>
